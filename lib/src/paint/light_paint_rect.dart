@@ -13,9 +13,10 @@ class LightPaintRect extends CustomPainter {
   final double offset;
   final double radius;
   final BorderSide? borderSide;
-  final Color shadowBorderColor;  // New parameter for shadow color
-  final double shadowOpacity;  // New parameter for shadow opacity
-  final double shadowSpreadRadius;  // New parameter for shadow spread radius
+  final Color shadowBorderColor; // New parameter for shadow color
+  final double shadowOpacity; // New parameter for shadow opacity
+  final double shadowSpreadRadius; // New parameter for shadow spread radius
+  final bool showBorderShadow;
 
   LightPaintRect({
     required this.progress,
@@ -25,18 +26,19 @@ class LightPaintRect extends CustomPainter {
     this.offset = 10,
     this.radius = 10,
     this.borderSide,
-    this.shadowBorderColor = const Color(0xffCFF406),  // Default shadow color
-    this.shadowOpacity = 0.5,  // Default shadow opacity
-    this.shadowSpreadRadius = 4,  // Default shadow spread radius
+    this.shadowBorderColor = const Color(0xffCFF406), // Default shadow color
+    this.shadowOpacity = 0.5, // Default shadow opacity
+    this.shadowSpreadRadius = 4, // Default shadow spread radius
+    this.showBorderShadow = true,
   }) : assert(opacityShadow >= 0 && opacityShadow <= 1);
 
   static Path _drawJustHole(
-      Size canvasSize,
-      double x,
-      double y,
-      double w,
-      double h,
-      ) {
+    Size canvasSize,
+    double x,
+    double y,
+    double w,
+    double h,
+  ) {
     return Path()
       ..moveTo(x + w, y)
       ..lineTo(x + w, y + h)
@@ -46,13 +48,13 @@ class LightPaintRect extends CustomPainter {
   }
 
   static Path _drawJustRHole(
-      Size canvasSize,
-      double x,
-      double y,
-      double w,
-      double h,
-      double radius,
-      ) {
+    Size canvasSize,
+    double x,
+    double y,
+    double w,
+    double h,
+    double radius,
+  ) {
     double diameter = radius * 2;
 
     return Path()
@@ -111,11 +113,19 @@ class LightPaintRect extends CustomPainter {
 
     // Drawing the shadow effect on the border
     if (borderSide != null && borderSide!.style != BorderStyle.none) {
-      Paint shadowPaint = Paint()
-        ..style = PaintingStyle.stroke
-        ..color = shadowBorderColor.withOpacity(shadowOpacity)
-        ..strokeWidth = borderSide!.width + shadowSpreadRadius
-        ..maskFilter = MaskFilter.blur(BlurStyle.normal, shadowSpreadRadius);
+      Paint shadowPaint;
+      if (showBorderShadow) {
+        shadowPaint = Paint()
+          ..style = PaintingStyle.stroke
+          ..color = shadowBorderColor.withOpacity(shadowOpacity)
+          ..strokeWidth = borderSide!.width + shadowSpreadRadius
+          ..maskFilter = MaskFilter.blur(BlurStyle.normal, shadowSpreadRadius);
+      } else {
+        shadowPaint = Paint()
+          ..style = PaintingStyle.stroke
+          ..color = borderSide!.color
+          ..strokeWidth = borderSide!.width;
+      }
 
       canvas.drawPath(
         radius > 0

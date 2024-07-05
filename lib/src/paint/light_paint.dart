@@ -9,21 +9,23 @@ class LightPaint extends CustomPainter {
   final Color colorShadow;
   final double opacityShadow;
   final BorderSide? borderSide;
-  final Color shadowBorderColor;  // New parameter for shadow color
-  final double shadowOpacity;  // New parameter for shadow opacity
-  final double shadowSpreadRadius;  // New parameter for shadow spread radius
+  final Color shadowBorderColor; // New parameter for shadow color
+  final double shadowOpacity; // New parameter for shadow opacity
+  final double shadowSpreadRadius; // New parameter for shadow spread radius
+  final bool showBorderShadow;
 
   LightPaint(
-      this.progress,
-      this.positioned,
-      this.sizeCircle, {
-        this.colorShadow = Colors.black,
-        this.opacityShadow = 0.8,
-        this.borderSide,
-        this.shadowBorderColor = const Color(0xffCFF406),  // Default shadow color
-        this.shadowOpacity = 0.5,  // Default shadow opacity
-        this.shadowSpreadRadius = 4,  // Default shadow spread radius
-      }) : assert(opacityShadow >= 0 && opacityShadow <= 1);
+    this.progress,
+    this.positioned,
+    this.sizeCircle, {
+    this.colorShadow = Colors.black,
+    this.opacityShadow = 0.8,
+    this.borderSide,
+    this.shadowBorderColor = const Color(0xffCFF406), // Default shadow color
+    this.shadowOpacity = 0.5, // Default shadow opacity
+    this.shadowSpreadRadius = 4, // Default shadow spread radius
+    this.showBorderShadow = true,
+  }) : assert(opacityShadow >= 0 && opacityShadow <= 1);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -43,14 +45,24 @@ class LightPaint extends CustomPainter {
 
     // Paint the circle with border and optional shadow
     if (borderSide != null && borderSide?.style != BorderStyle.none) {
-      Paint borderPaint = Paint()
-        ..style = PaintingStyle.stroke
-        ..color = borderSide!.color.withOpacity(opacityShadow)
-        ..strokeWidth = borderSide!.width;
+      Paint borderPaint;
+
+      if(showBorderShadow){
+        borderPaint = Paint()
+          ..style = PaintingStyle.stroke
+          ..color = shadowBorderColor.withOpacity(shadowOpacity)
+          ..strokeWidth = borderSide!.width;
+      } else {
+        borderPaint = Paint()
+          ..style = PaintingStyle.stroke
+          ..color = borderSide!.color
+          ..strokeWidth = borderSide!.width;
+      }
 
       // Adding shadow to the border if enabled
-      if (shadowSpreadRadius > 0) {
-        borderPaint..maskFilter = MaskFilter.blur(BlurStyle.normal, shadowSpreadRadius);
+      if (shadowSpreadRadius > 0 && showBorderShadow) {
+        borderPaint
+          .maskFilter = MaskFilter.blur(BlurStyle.normal, shadowSpreadRadius);
       }
 
       canvas.drawPath(
