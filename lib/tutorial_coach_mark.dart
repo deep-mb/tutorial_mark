@@ -39,6 +39,10 @@ class TutorialCoachMark {
 
   OverlayEntry? _overlayEntry;
 
+  final Color shadowBorderColor;
+  final double shadowOpacity;
+  final double shadowSpreadRadius;
+
   TutorialCoachMark({
     required this.targets,
     this.colorShadow = Colors.black,
@@ -60,6 +64,9 @@ class TutorialCoachMark {
     this.skipWidget,
     this.showSkipInLastTarget = true,
     this.imageFilter,
+    this.shadowBorderColor = const Color(0xffCFF406),
+    this.shadowOpacity = 0.5,
+    this.shadowSpreadRadius = 4,
   }) : assert(opacityShadow >= 0 && opacityShadow <= 1);
 
   OverlayEntry _buildOverlay({bool rootOverlay = false}) {
@@ -88,6 +95,9 @@ class TutorialCoachMark {
           rootOverlay: rootOverlay,
           showSkipInLastTarget: showSkipInLastTarget,
           imageFilter: imageFilter,
+          shadowSpreadRadius: shadowSpreadRadius,
+          shadowOpacity: shadowOpacity,
+          shadowBorderColor: shadowBorderColor,
         );
       },
     );
