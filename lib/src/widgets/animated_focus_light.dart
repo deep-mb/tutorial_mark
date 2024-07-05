@@ -32,6 +32,7 @@ class AnimatedFocusLight extends StatefulWidget {
   final Color shadowBorderColor;
   final double shadowOpacity;
   final double shadowSpreadRadius;
+  final bool showBorderShadow;
 
   const AnimatedFocusLight({
     Key? key,
@@ -55,6 +56,7 @@ class AnimatedFocusLight extends StatefulWidget {
     this.shadowBorderColor = const Color(0xffCFF406),
     this.shadowOpacity = 0.5,
     this.shadowSpreadRadius = 4,
+    this.showBorderShadow = true,
   })  : assert(targets.length > 0),
         super(key: key);
 
@@ -213,6 +215,7 @@ abstract class AnimatedFocusLightState extends State<AnimatedFocusLight>
         shadowBorderColor: widget.shadowBorderColor,
         shadowOpacity: widget.shadowOpacity,
         shadowSpreadRadius: widget.shadowSpreadRadius,
+        showBorderShadow: widget.showBorderShadow,
       );
     } else {
       return LightPaint(
@@ -225,6 +228,7 @@ abstract class AnimatedFocusLightState extends State<AnimatedFocusLight>
         shadowBorderColor: widget.shadowBorderColor,
         shadowOpacity: widget.shadowOpacity,
         shadowSpreadRadius: widget.shadowSpreadRadius,
+        showBorderShadow: widget.showBorderShadow,
       );
     }
   }

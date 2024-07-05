@@ -42,6 +42,7 @@ class TutorialCoachMark {
   final Color shadowBorderColor;
   final double shadowOpacity;
   final double shadowSpreadRadius;
+  final bool showBorderShadow;
 
   TutorialCoachMark({
     required this.targets,
@@ -67,6 +68,7 @@ class TutorialCoachMark {
     this.shadowBorderColor = const Color(0xffCFF406),
     this.shadowOpacity = 0.5,
     this.shadowSpreadRadius = 4,
+    this.showBorderShadow = true,
   }) : assert(opacityShadow >= 0 && opacityShadow <= 1);
 
   OverlayEntry _buildOverlay({bool rootOverlay = false}) {
@@ -98,6 +100,7 @@ class TutorialCoachMark {
           shadowSpreadRadius: shadowSpreadRadius,
           shadowOpacity: shadowOpacity,
           shadowBorderColor: shadowBorderColor,
+          showShadowBorder: showBorderShadow,
         );
       },
     );

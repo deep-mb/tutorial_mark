@@ -36,6 +36,7 @@ class TutorialCoachMarkWidget extends StatefulWidget {
     this.shadowBorderColor = const Color(0xffCFF406),
     this.shadowOpacity = 0.5,
     this.shadowSpreadRadius = 4,
+    this.showShadowBorder = true,
   })  : assert(targets.length > 0),
         super(key: key);
 
@@ -65,6 +66,7 @@ class TutorialCoachMarkWidget extends StatefulWidget {
   final Color shadowBorderColor;
   final double shadowOpacity;
   final double shadowSpreadRadius;
+  final bool showShadowBorder;
 
   @override
   TutorialCoachMarkWidgetState createState() => TutorialCoachMarkWidgetState();
@@ -99,6 +101,7 @@ class TutorialCoachMarkWidgetState extends State<TutorialCoachMarkWidget>
             shadowBorderColor: widget.shadowBorderColor,
             shadowOpacity: widget.shadowOpacity,
             shadowSpreadRadius: widget.shadowSpreadRadius,
+            showBorderShadow: widget.showShadowBorder,
             clickTarget: (target) {
               return widget.clickTarget?.call(target);
             },
