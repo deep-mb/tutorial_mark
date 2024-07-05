@@ -33,6 +33,9 @@ class TutorialCoachMarkWidget extends StatefulWidget {
     this.rootOverlay = false,
     this.showSkipInLastTarget = false,
     this.imageFilter,
+    this.shadowBorderColor = const Color(0xffCFF406),
+    this.shadowOpacity = 0.5,
+    this.shadowSpreadRadius = 4,
   })  : assert(targets.length > 0),
         super(key: key);
 
@@ -59,6 +62,9 @@ class TutorialCoachMarkWidget extends StatefulWidget {
   final bool rootOverlay;
   final bool showSkipInLastTarget;
   final ImageFilter? imageFilter;
+  final Color shadowBorderColor;
+  final double shadowOpacity;
+  final double shadowSpreadRadius;
 
   @override
   TutorialCoachMarkWidgetState createState() => TutorialCoachMarkWidgetState();
@@ -90,6 +96,9 @@ class TutorialCoachMarkWidgetState extends State<TutorialCoachMarkWidget>
             pulseEnable: widget.pulseEnable,
             rootOverlay: widget.rootOverlay,
             imageFilter: widget.imageFilter,
+            shadowBorderColor: widget.shadowBorderColor,
+            shadowOpacity: widget.shadowOpacity,
+            shadowSpreadRadius: widget.shadowSpreadRadius,
             clickTarget: (target) {
               return widget.clickTarget?.call(target);
             },
